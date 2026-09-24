@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bat-Ordinateur</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-5">
+  <h1 id="welcome">Chargement...</h1>
+
+  <h2 class="mt-4">Arsenal</h2>
+  <div id="arsenal" class="d-flex flex-wrap gap-3"></div>
+
+  <h2 class="mt-4">Rapport de mission</h2>
+  <form id="report-form" class="col-md-6">
+    <textarea id="report-content" class="form-control mb-2" rows="3" placeholder="Écrire un rapport..."></textarea>
+    <button type="submit" class="btn btn-dark">Envoyer</button>
+  </form>
+
+  <script>
+    // Le navigateur ne renvoie pas automatiquement l'en-tête Authorization
+    const username = prompt("Nom d'utilisateur :");
+    const password = prompt("Mot de passe :");
+    const authHeader = 'Basic ' + btoa(username + ':' + password);
+
+    fetch('/api/me', { headers: { 'Authorization': authHeader } })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('welcome').textContent = `Bienvenue, Monsieur le meme mec qui joue dans l'Odysee ${data.username}`;
+      });
+
+    fetch('/api/secrets', { headers: { 'Authorization': authHeader } })
+      .then(res => res.json())
+      .then(gadgets => {
+        const container = document.getElementById('arsenal');
+        gadgets.forEach(g => {
+          const card = document.createElement('div');
+          card.className = 'card p-3';
+          card.style.width = '200px';
+          card.innerHTML = `<h5>${g.name}</h5><p>${g.desc}</p>`;
+          container.appendChild(card);
+        });
+      });
+
+    document.getElementById('report-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const content = document.getElementById('report-content').value;
+      fetch('/api/reports', {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content })
+      }).then(() => alert('Rapport envoyé !'));
+    });
+  </script>
+</body>
+</html>
