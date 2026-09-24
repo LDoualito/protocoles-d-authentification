@@ -1,7 +1,5 @@
 # Protocoles d'authentification
 
-Deux TP réalisés en Node.js / Express autour de l'authentification.
-
 ## TP1 - `batcave-security` : authentification HTTP Basic
 
 Les identifiants sont envoyés à chaque requête dans l'en-tête `Authorization`.
