@@ -1,0 +1,22 @@
+{
+  "name": "batcave-sessions",
+  "version": "1.0.0",
+  "description": "TP2 - Sessions et cookies",
+  "main": "seed.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^13.0.3",
+    "better-sqlite3-session-store": "^0.1.0",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
+  }
+}
